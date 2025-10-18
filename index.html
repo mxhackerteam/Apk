@@ -1,0 +1,1413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LisanMods</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: #121212;
+      color: #e0e0e0;
+      padding-bottom: 70px;
+    }
+
+    /* Header */
+    .header {
+      background: linear-gradient(135deg, #1f1f1f, #2d2d2d);
+      padding: 12px 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      animation: slideDown 0.5s ease-out;
+    }
+
+    .logo {
+      color: #bb86fc;
+      font-size: 22px;
+      font-weight: bold;
+      text-shadow: 0 0 10px rgba(187, 134, 252, 0.5);
+    }
+
+    .profile-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .profile-header img {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 2px solid #bb86fc;
+      transition: transform 0.3s ease;
+    }
+
+    .profile-header img:hover {
+      transform: scale(1.1);
+    }
+
+    .profile-header span {
+      font-weight: bold;
+      color: #e0e0e0;
+    }
+
+    .menu-btn {
+      background: none;
+      border: none;
+      color: #e0e0e0;
+      font-size: 26px;
+      cursor: pointer;
+    }
+
+    .container {
+      padding: 15px;
+    }
+
+    .app-card,
+    .upload-form,
+    .profile-section,
+    .admin-panel,
+    .login-form {
+      background: linear-gradient(135deg, #1f1f1f, #2a2a2a);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+      border: 1px solid #333;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .app-card:hover,
+    .upload-form:hover,
+    .profile-section:hover,
+    .admin-panel:hover,
+    .login-form:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.5);
+    }
+
+    .app-icon {
+      width: 100px;
+      height: 100px;
+      border-radius: 20px;
+      margin: 0 auto 15px;
+      display: block;
+      background: linear-gradient(135deg, #a4c639, #6a8e1e);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease;
+      object-fit: cover;
+    }
+
+    .app-icon:hover {
+      transform: scale(1.05);
+    }
+
+    .app-title {
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #e0e0e0;
+      text-shadow: 0 0 5px rgba(187, 134, 252, 0.3);
+    }
+
+    .app-author,
+    .app-stats div {
+      text-align: center;
+      color: #999;
+      margin-bottom: 15px;
+    }
+
+    .app-stats {
+      display: flex;
+      justify-content: space-around;
+      margin: 20px 0;
+      font-size: 14px;
+    }
+
+    .download-btn,
+    .submit-btn {
+      background: linear-gradient(135deg, #bb86fc, #9a68e8);
+      color: #121212;
+      border: none;
+      padding: 15px;
+      border-radius: 10px;
+      width: 100%;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-bottom: 15px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(187, 134, 252, 0.3);
+    }
+
+    .download-btn:hover,
+    .submit-btn:hover {
+      background: linear-gradient(135deg, #9a68e8, #7c4dff);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(187, 134, 252, 0.4);
+    }
+
+    /* Social Buttons */
+    .social-btns {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .social-btn {
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      color: white;
+      opacity: 0.9;
+      text-align: center;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .social-btn:hover {
+      opacity: 1;
+      transform: translateY(-2px);
+    }
+
+    .whatsapp {
+      background: linear-gradient(135deg, #128c7e, #075e54);
+    }
+    .facebook {
+      background: linear-gradient(135deg, #3b5998, #2d4373);
+    }
+    .telegram {
+      background: linear-gradient(135deg, #0088cc, #006699);
+      grid-column: span 2;
+    }
+
+    /* Bottom Navigation */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(135deg, #1f1f1f, #2d2d2d);
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
+      z-index: 100;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      color: #999;
+      text-decoration: none;
+      font-size: 12px;
+      transition: all 0.3s ease;
+      padding: 5px 10px;
+      border-radius: 10px;
+    }
+
+    .nav-item:hover {
+      background: rgba(187, 134, 252, 0.1);
+    }
+
+    .nav-item.active {
+      color: #bb86fc;
+      background: rgba(187, 134, 252, 0.2);
+    }
+
+    .nav-icon {
+      font-size: 22px;
+      margin-bottom: 3px;
+      transition: transform 0.3s ease;
+    }
+
+    .nav-item.active .nav-icon {
+      transform: scale(1.2);
+    }
+
+    .page {
+      display: none;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #e0e0e0;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #333;
+      background: #2c2c2c;
+      color: #e0e0e0;
+      border-radius: 8px;
+      font-size: 14px;
+      transition: all 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      border-color: #bb86fc;
+      box-shadow: 0 0 0 2px rgba(187, 134, 252, 0.3);
+      outline: none;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .login-form {
+      background: linear-gradient(135deg, #1f1f1f, #2a2a2a);
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+      border: 1px solid #333;
+    }
+
+    .login-form h2 {
+      margin-bottom: 20px;
+      text-align: center;
+      color: #e0e0e0;
+      text-shadow: 0 0 5px rgba(187, 134, 252, 0.3);
+    }
+
+    .app-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .app-list-item {
+      background: #2c2c2c;
+      padding: 15px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-left: 5px solid #bb86fc;
+      transition: all 0.3s ease;
+    }
+
+    .app-list-item:hover {
+      background: #333;
+      transform: translateX(5px);
+    }
+
+    .delete-btn {
+      background: linear-gradient(135deg, #cf6679, #b00020);
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .delete-btn:hover {
+      background: linear-gradient(135deg, #b00020, #8a0018);
+      transform: scale(1.05);
+    }
+
+    .profile-avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #bb86fc, #6a3a9a);
+      margin: 0 auto 10px;
+      display: block;
+      box-shadow: 0 4px 10px rgba(187, 134, 252, 0.3);
+      transition: transform 0.3s ease;
+    }
+
+    .profile-avatar:hover {
+      transform: scale(1.05);
+    }
+
+    .stat-value {
+      color: #bb86fc;
+      font-weight: bold;
+      font-size: 20px;
+    }
+
+    .stat-item {
+      background: #2c2c2c;
+      border-radius: 8px;
+      text-align: center;
+      padding: 10px;
+      margin: 5px;
+      transition: all 0.3s ease;
+    }
+
+    .stat-item:hover {
+      background: #333;
+      transform: translateY(-3px);
+    }
+
+    .stat-box {
+      display: flex;
+      justify-content: space-around;
+      margin: 15px 0;
+    }
+
+    /* App Screenshots */
+    .app-screenshots {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding: 10px 0;
+      margin: 15px 0;
+    }
+
+    .screenshot {
+      width: 150px;
+      height: 250px;
+      border-radius: 10px;
+      object-fit: cover;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease;
+    }
+
+    .screenshot:hover {
+      transform: scale(1.05);
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideDown {
+      from { transform: translateY(-20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    .pulse {
+      animation: pulse 2s infinite;
+    }
+
+    /* Home Page Apps Grid */
+    .apps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .app-grid-item {
+      background: linear-gradient(135deg, #1f1f1f, #2a2a2a);
+      border-radius: 12px;
+      padding: 15px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .app-grid-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);
+    }
+
+    .app-grid-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 12px;
+      margin: 0 auto 10px;
+      object-fit: cover;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease;
+    }
+
+    .app-grid-icon:hover {
+      transform: scale(1.05);
+    }
+
+    .app-grid-name {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .app-grid-developer {
+      font-size: 12px;
+      color: #999;
+    }
+
+    /* Password Toggle */
+    .password-container {
+      position: relative;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: #999;
+      cursor: pointer;
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: #333;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      z-index: 1000;
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* Download Progress */
+    .download-progress {
+      width: 100%;
+      height: 6px;
+      background: #333;
+      border-radius: 3px;
+      margin-top: 10px;
+      overflow: hidden;
+      display: none;
+    }
+
+    .download-progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #bb86fc, #9a68e8);
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    /* Download Success Animation */
+    @keyframes downloadSuccess {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    .download-success {
+      animation: downloadSuccess 0.5s ease;
+    }
+
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: #999;
+    }
+
+    .empty-state .icon {
+      font-size: 60px;
+      margin-bottom:-20px;
+      opacity: 0.5;
+    }
+
+    .empty-state h3 {
+      margin-bottom: 10px;
+      color: #bb86fc;
+    }
+
+    .empty-state p {
+      margin-bottom: 20px;
+    }
+
+    /* File Upload */
+    .file-upload {
+      border: 2px dashed #555;
+      border-radius: 8px;
+      padding: 20px;
+      text-align: center;
+      margin-bottom: 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .file-upload:hover {
+      border-color: #bb86fc;
+      background: rgba(187, 134, 252, 0.05);
+    }
+
+    .file-upload-icon {
+      font-size: 40px;
+      margin-bottom: 10px;
+      color: #666;
+    }
+
+    .file-upload-text {
+      color: #999;
+      margin-bottom: 10px;
+    }
+
+    .file-info {
+      background: #2c2c2c;
+      padding: 10px;
+      border-radius: 5px;
+      margin-top: 10px;
+      font-size: 12px;
+      display: none;
+    }
+
+    .file-preview {
+      max-width: 100%;
+      max-height: 200px;
+      margin-top: 10px;
+      border-radius: 5px;
+      display: none;
+    }
+
+    /* Upload Method Toggle */
+    .upload-method-toggle {
+      display: flex;
+      background: #2c2c2c;
+      border-radius: 8px;
+      padding: 5px;
+      margin-bottom: 20px;
+    }
+
+    .upload-method {
+      flex: 1;
+      text-align: center;
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+    }
+
+    .upload-method.active {
+      background: #bb86fc;
+      color: #121212;
+      font-weight: bold;
+    }
+
+    .upload-section {
+      display: none;
+    }
+
+    .upload-section.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    /* Link Input */
+    .link-input-group {
+      display: flex;
+      gap: 10px;
+    }
+
+    .link-input-group input {
+      flex: 1;
+    }
+
+    .test-link-btn {
+      background: linear-gradient(135deg, #03dac6, #018786);
+      color: #121212;
+      border: none;
+      padding: 12px 15px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+    }
+
+    .test-link-btn:hover {
+      background: linear-gradient(135deg, #018786, #016b6b);
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo">APPHUB</div>
+    <div class="profile-header">
+      <img src="https://i.ibb.co.com/GQKmT21Z/3f805730-bea0-4710-86ed-c72306d5dfa0.jpg" alt="Lisan">
+      <span>LisanMods </span>
+    </div>
+  </div>
+
+  <div class="container">
+    <div id="homePage" class="page active">
+      <h2 style="text-align: center; padding: 20px;">Welcome to AppHub!📱</h2>
+      <div class="apps-grid" id="appsGrid">
+        <!-- Apps will be dynamically added here -->
+      </div>
+      <div id="emptyState" class="empty-state" style="display: none;">
+        <div class="icon"></div>
+        <h3>No Apps Available</h3>
+        <p>Upload your first app to get started!</p>
+        <button class="submit-btn" onclick="showPage(event, 'uploadPage')" style="width: auto; padding: 10px 20px;">
+          Upload App
+        </button>
+      </div>
+    </div>
+
+    <div id="uploadPage" class="page">
+      <div class="upload-form">
+        <h2>Upload New App</h2>
+        
+        <!-- Upload Method Toggle -->
+        <div class="upload-method-toggle">
+          <div class="upload-method active" data-method="file" onclick="toggleUploadMethod('file')">
+            📁 File Upload
+          </div>
+          <div class="upload-method" data-method="link" onclick="toggleUploadMethod('link')">
+            🔗 Link Upload
+          </div>
+        </div>
+
+        <form id="appUploadForm">
+          <div class="form-group">
+            <label>App Name</label>
+            <input type="text" id="appName" required />
+          </div>
+          <div class="form-group">
+            <label>Developer Name</label>
+            <input type="text" id="devName" required />
+          </div>
+          <div class="form-group">
+            <label>Version</label>
+            <input type="text" id="appVersion" placeholder="1.0" required />
+          </div>
+          <div class="form-group">
+            <label>Description</label>
+            <textarea id="appDescription" required></textarea>
+          </div>
+          
+          <!-- File Upload Section -->
+          <div id="fileUploadSection" class="upload-section active">
+            <div class="form-group">
+              <label>App Icon</label>
+              <div class="file-upload" id="iconUpload">
+                <div class="file-upload-icon">📁</div>
+                <div class="file-upload-text">Click to upload app icon</div>
+                <input type="file" id="appIconFile" accept="image/*" style="display: none;" />
+              </div>
+              <div class="file-info" id="iconInfo"></div>
+              <img id="iconPreview" class="file-preview" />
+            </div>
+            
+            <div class="form-group">
+              <label>App File</label>
+              <div class="file-upload" id="fileUpload">
+                <div class="file-upload-icon">📁</div>
+                <div class="file-upload-text">Click to upload app file</div>
+                <input type="file" id="appFile" style="display: none;" />
+              </div>
+              <div class="file-info" id="fileInfo"></div>
+            </div>
+          </div>
+          
+          <!-- Link Upload Section -->
+          <div id="linkUploadSection" class="upload-section">
+            <div class="form-group">
+              <label>App Icon URL</label>
+              <input type="url" id="appIconUrl" placeholder="https://example.com/icon.png" />
+            </div>
+            
+            <div class="form-group">
+              <label>App Download Link</label>
+              <div class="link-input-group">
+                <input type="url" id="appDownloadLink" placeholder="https://example.com/app.apk" required />
+                <button type="button" class="test-link-btn" onclick="testDownloadLink()">Test Link</button>
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label>Screenshots</label>
+            <div class="file-upload" id="screenshotsUpload">
+              <div class="file-upload-icon">🖼️</div>
+              <div class="file-upload-text">Click to upload screenshots</div>
+              <input type="file" id="appScreenshots" multiple accept="image/*" style="display: none;" />
+            </div>
+            <div class="file-info" id="screenshotsInfo"></div>
+            <div id="screenshotsPreview" style="display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap;"></div>
+          </div>
+          
+          <div class="form-group">
+            <label>Upload Password</label>
+            <div class="password-container">
+              <input type="password" id="uploadPassword" required />
+              <button type="button" class="toggle-password" onclick="togglePassword('uploadPassword')">👁️</button>
+            </div>
+          </div>
+          <button type="submit" class="submit-btn">Upload App</button>
+        </form>
+      </div>
+    </div>
+
+    <div id="profilePage" class="page">
+      <div class="profile-section">
+        <div class="profile-info" style="text-align:center;">
+          <img src="https://i.ibb.co.com/GQKmT21Z/3f805730-bea0-4710-86ed-c72306d5dfa0.jpg" class="profile-avatar" alt="Lisan" />
+          <h2>LisanMods</h2>
+          <p style="color:#999;">Developer</p>
+        </div>
+
+        <div class="stat-box">
+          <div class="stat-item">
+            <div class="stat-value" id="totalApps">0</div>
+            <div class="stat-label">Apps</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value" id="totalDownloads">0</div>
+            <div class="stat-label">Downloads</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value" id="avgRating">0.0</div>
+            <div class="stat-label">Rating</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label></label>
+          <input type="email" value="LISANMODS" readonly />
+        </div>
+        <div class="form-group">
+          <label></label>
+          <input type="url" value="BANGLADESH🇧🇩" readonly />
+        </div>
+
+        <div class="social-btns">
+          <a href="https://t.me/zhackerteam00" target="_blank" class="social-btn whatsapp">WhatsApp</a>
+          <a href="https://www.instagram.com/lisan_mods" target="_blank" class="social-btn facebook">Instagram</a>
+          <a href="https://t.me/zhackerteam00" target="_blank" class="social-btn telegram">Telegram</a>
+        </div>
+      </div>
+    </div>
+
+    <div id="adminPage" class="page">
+      <div id="adminLogin" class="login-form">
+        <h2>🔐 Admin Login</h2>
+        <form id="adminLoginForm">
+          <div class="form-group">
+            <label>Password</label>
+            <div class="password-container">
+              <input type="password" id="adminPassword" required />
+              <button type="button" class="toggle-password" onclick="togglePassword('adminPassword')">👁️</button>
+            </div>
+          </div>
+          <button type="submit" class="submit-btn">Login</button>
+        </form>
+      </div>
+
+      <div id="adminPanel" class="admin-panel" style="display: none;">
+        <h2>Admin Control Panel</h2>
+        <div class="stat-box">
+          <div class="stat-item">
+            <div class="stat-value" id="adminTotalApps">0</div>
+            <div class="stat-label">Total Apps</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value" id="adminTotalUsers">1</div>
+            <div class="stat-label">Users</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value" id="adminTotalDownloads">0</div>
+            <div class="stat-label">Downloads</div>
+          </div>
+        </div>
+
+        <h3 style="margin: 20px 0;">Manage Apps</h3>
+        <ul class="app-list" id="adminAppList"></ul>
+        <div id="adminEmptyState" class="empty-state" style="display: none;">
+          <div class="icon"></div>
+          <h3>No Apps Available</h3>
+          <p>Upload your first app to get started!</p>
+        </div>
+        <button class="submit-btn" onclick="logout()" style="margin-top: 20px; background: linear-gradient(135deg, #cf6679, #b00020);">
+          Logout
+        </button>
+      </div>
+    </div>
+
+    <div id="appDetailPage" class="page">
+      <div class="app-card" id="appDetailCard">
+        <!-- App details will be dynamically added here -->
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <nav class="bottom-nav">
+    <a class="nav-item active" data-page-id="homePage" onclick="showPage(event, 'homePage')">
+      <div class="nav-icon">🏠</div>
+      <div>Home</div>
+    </a>
+    <a class="nav-item" data-page-id="uploadPage" onclick="showPage(event, 'uploadPage')">
+      <div class="nav-icon">⬆️</div>
+      <div>Upload</div>
+    </a>
+    <a class="nav-item" data-page-id="profilePage" onclick="showPage(event, 'profilePage')">
+      <div class="nav-icon">👤</div>
+      <div>Profile</div>
+    </a>
+    <a class="nav-item" data-page-id="adminPage" onclick="showPage(event, 'adminPage')">
+      <div class="nav-icon">⚙️</div>
+      <div>Admin</div>
+    </a>
+  </nav>
+
+  <script>
+    // Initialize apps from localStorage or empty array
+    let apps = JSON.parse(localStorage.getItem('apphub_apps')) || [];
+
+    let isAdminLoggedIn = false;
+    const ADMIN_PASSWORD = "lisanmods";
+    const UPLOAD_PASSWORD = "lisanmods";
+
+    // File storage for uploaded files
+    let uploadedFiles = JSON.parse(localStorage.getItem('apphub_files')) || {};
+
+    // Save apps to localStorage
+    function saveApps() {
+      localStorage.setItem('apphub_apps', JSON.stringify(apps));
+    }
+
+    // Save files to localStorage
+    function saveFiles() {
+      localStorage.setItem('apphub_files', JSON.stringify(uploadedFiles));
+    }
+
+    // Convert file to base64 for storage
+    function fileToBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+      });
+    }
+
+    // Toggle between file and link upload methods
+    function toggleUploadMethod(method) {
+      document.querySelectorAll('.upload-method').forEach(el => {
+        el.classList.remove('active');
+      });
+      document.querySelector(`.upload-method[data-method="${method}"]`).classList.add('active');
+      
+      document.querySelectorAll('.upload-section').forEach(el => {
+        el.classList.remove('active');
+      });
+      document.getElementById(`${method}UploadSection`).classList.add('active');
+    }
+
+    // Test download link
+    function testDownloadLink() {
+      const link = document.getElementById('appDownloadLink').value;
+      if (!link) {
+        showToast('Please enter a download link first');
+        return;
+      }
+      
+      // Open link in new tab to test
+      window.open(link, '_blank');
+      showToast('Testing download link in new tab...');
+    }
+
+    // Set up file upload handlers
+    document.addEventListener('DOMContentLoaded', function() {
+      // Icon upload
+      document.getElementById('iconUpload').addEventListener('click', function() {
+        document.getElementById('appIconFile').click();
+      });
+      
+      document.getElementById('appIconFile').addEventListener('change', function(e) {
+        if (e.target.files.length > 0) {
+          const file = e.target.files[0];
+          document.getElementById('iconInfo').style.display = 'block';
+          document.getElementById('iconInfo').textContent = `Selected: ${file.name} (${(file.size / 1024).toFixed(2)} KB)`;
+          
+          // Preview image
+          const reader = new FileReader();
+          reader.onload = function(event) {
+            document.getElementById('iconPreview').src = event.target.result;
+            document.getElementById('iconPreview').style.display = 'block';
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+      
+      // File upload
+      document.getElementById('fileUpload').addEventListener('click', function() {
+        document.getElementById('appFile').click();
+      });
+      
+      document.getElementById('appFile').addEventListener('change', function(e) {
+        if (e.target.files.length > 0) {
+          const file = e.target.files[0];
+          document.getElementById('fileInfo').style.display = 'block';
+          document.getElementById('fileInfo').textContent = `Selected: ${file.name} (${(file.size / 1024).toFixed(2)} KB)`;
+        }
+      });
+      
+      // Screenshots upload
+      document.getElementById('screenshotsUpload').addEventListener('click', function() {
+        document.getElementById('appScreenshots').click();
+      });
+      
+      document.getElementById('appScreenshots').addEventListener('change', function(e) {
+        if (e.target.files.length > 0) {
+          document.getElementById('screenshotsInfo').style.display = 'block';
+          document.getElementById('screenshotsInfo').textContent = `Selected: ${e.target.files.length} file(s)`;
+          
+          // Preview screenshots
+          const previewContainer = document.getElementById('screenshotsPreview');
+          previewContainer.innerHTML = '';
+          
+          Array.from(e.target.files).forEach(file => {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+              const img = document.createElement('img');
+              img.src = event.target.result;
+              img.style.maxWidth = '100px';
+              img.style.maxHeight = '150px';
+              img.style.borderRadius = '5px';
+              previewContainer.appendChild(img);
+            };
+            reader.readAsDataURL(file);
+          });
+        }
+      });
+    });
+
+    function showPage(event, pageId) {
+      document.querySelectorAll(".page").forEach((page) => {
+        page.classList.remove("active");
+      });
+      document.getElementById(pageId).classList.add("active");
+
+      document.querySelectorAll(".nav-item").forEach((item) => {
+        item.classList.remove("active");
+      });
+      const navItem = event ? event.currentTarget : document.querySelector(`.nav-item[data-page-id="${pageId}"]`);
+      if (navItem) navItem.classList.add("active");
+
+      if (pageId === "adminPage" && !isAdminLoggedIn) {
+        document.getElementById("adminLogin").style.display = "block";
+        document.getElementById("adminPanel").style.display = "none";
+      }
+
+      if (pageId === "homePage") {
+        updateAppsGrid();
+      }
+
+      updateStats();
+    }
+
+    function updateAppsGrid() {
+      const grid = document.getElementById("appsGrid");
+      const emptyState = document.getElementById("emptyState");
+      
+      if (apps.length === 0) {
+        grid.style.display = "none";
+        emptyState.style.display = "block";
+      } else {
+        grid.style.display = "grid";
+        emptyState.style.display = "none";
+        
+        grid.innerHTML = "";
+        
+        apps.forEach((app, index) => {
+          const appItem = document.createElement("div");
+          appItem.className = "app-grid-item";
+          appItem.onclick = () => showAppDetail(index);
+          
+          appItem.innerHTML = `
+            ${app.icon ? 
+              `<img src="${app.icon}" class="app-grid-icon" alt="${app.name}" />` : 
+              `<div class="app-grid-icon" style="background: linear-gradient(135deg, #a4c639, #6a8e1e);"></div>`
+            }
+            <div class="app-grid-name">${app.name}</div>
+            <div class="app-grid-developer">by ${app.developer}</div>
+          `;
+          
+          grid.appendChild(appItem);
+        });
+      }
+    }
+
+    function showAppDetail(index) {
+      const app = apps[index];
+      const detailCard = document.getElementById("appDetailCard");
+      
+      detailCard.innerHTML = `
+        ${app.icon ? 
+          `<img src="${app.icon}" class="app-icon" alt="${app.name}" />` : 
+          `<div class="app-icon" style="background: linear-gradient(135deg, #a4c639, #6a8e1e);"></div>`
+        }
+        <div class="app-title">${app.name}</div>
+        <div class="app-author">by ${app.developer}</div>
+        <div class="app-stats">
+          <div>${app.downloads} Downloads</div>
+          <div>v${app.version}</div>
+          <div>${app.rating} ⭐</div>
+        </div>
+        <p style="text-align: center; margin-bottom: 15px;">${app.description}</p>
+        
+        ${app.screenshots && app.screenshots.length > 0 ? `
+          <div class="app-screenshots">
+            ${app.screenshots.map(url => `<img src="${url}" class="screenshot" alt="App Screenshot">`).join('')}
+          </div>
+        ` : ''}
+        
+        <button class="download-btn" onclick="downloadApp(${index})">Download App</button>
+        <div class="download-progress" id="downloadProgress${index}">
+          <div class="download-progress-bar" id="downloadProgressBar${index}"></div>
+        </div>
+        <div class="social-btns">
+          <a href="https://wa.me/?text=Check out ${app.name} on AppHub!" target="_blank" class="social-btn whatsapp">Share on WhatsApp</a>
+          <a href="https://facebook.com/sharer/sharer.php?u=https://apphub.com/app/${index}" target="_blank" class="social-btn facebook">Share on Facebook</a>
+          <a href="https://t.me/share/url?url=https://apphub.com/app/${index}&text=Check out ${app.name} on AppHub!" target="_blank" class="social-btn telegram">Share on Telegram</a>
+        </div>
+        <button class="submit-btn" onclick="showPage(event, 'homePage')" style="background: linear-gradient(135deg, #666, #444);">Back to Home</button>
+      `;
+      
+      showPage(event, "appDetailPage");
+    }
+
+    function downloadApp(index) {
+      const app = apps[index];
+      const progressBar = document.getElementById(`downloadProgressBar${index}`);
+      const progressContainer = document.getElementById(`downloadProgress${index}`);
+      const downloadBtn = document.querySelector(`#appDetailCard .download-btn`);
+      
+      // Show progress bar
+      progressContainer.style.display = 'block';
+      
+      // Simulate download progress
+      let progress = 0;
+      const interval = setInterval(() => {
+        progress += Math.random() * 15;
+        if (progress >= 100) {
+          progress = 100;
+          clearInterval(interval);
+          
+          // Update app downloads
+          apps[index].downloads++;
+          saveApps();
+          
+          // Show success animation
+          downloadBtn.classList.add('download-success');
+          setTimeout(() => {
+            downloadBtn.classList.remove('download-success');
+          }, 500);
+          
+          // Show success message
+          showToast(`Downloaded ${app.name} successfully!`);
+          
+          // Hide progress bar after a moment
+          setTimeout(() => {
+            progressContainer.style.display = 'none';
+          }, 2000);
+          
+          // Trigger download based on upload method
+          setTimeout(() => {
+            if (app.fileId && uploadedFiles[app.fileId]) {
+              // File upload method
+              triggerDownload(uploadedFiles[app.fileId].data, app.name, uploadedFiles[app.fileId].type);
+            } else if (app.downloadLink) {
+              // Link upload method - redirect to the link
+              window.open(app.downloadLink, '_blank');
+            }
+          }, 1000);
+          
+          updateStats();
+        }
+        progressBar.style.width = `${progress}%`;
+      }, 200);
+    }
+
+    // Function to trigger direct download
+    function triggerDownload(dataUrl, filename, mimeType) {
+      // Create a temporary anchor element
+      const a = document.createElement('a');
+      a.href = dataUrl;
+      a.download = filename || 'download';
+      
+      // Append to the body, click, and remove
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+
+    document.getElementById("appUploadForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const password = document.getElementById("uploadPassword").value;
+
+      if (password !== UPLOAD_PASSWORD) {
+        showToast("Incorrect upload password!");
+        return;
+      }
+
+      // Determine upload method
+      const isFileUpload = document.querySelector('.upload-method[data-method="file"]').classList.contains('active');
+      
+      try {
+        let iconData = '';
+        let fileId = null;
+        let downloadLink = null;
+        
+        if (isFileUpload) {
+          // File upload method
+          const iconFile = document.getElementById('appIconFile').files[0];
+          const appFile = document.getElementById('appFile').files[0];
+
+          if (!iconFile || !appFile) {
+            showToast("Please select both an icon and an app file!");
+            return;
+          }
+
+          // Convert files to base64
+          iconData = await fileToBase64(iconFile);
+          const appData = await fileToBase64(appFile);
+          
+          // Generate unique ID for file
+          fileId = 'file_' + Date.now();
+
+          // Store file
+          uploadedFiles[fileId] = {
+            data: appData,
+            type: appFile.type,
+            name: appFile.name
+          };
+        } else {
+          // Link upload method
+          const iconUrl = document.getElementById('appIconUrl').value;
+          downloadLink = document.getElementById('appDownloadLink').value;
+
+          if (!downloadLink) {
+            showToast("Please enter a download link!");
+            return;
+          }
+
+          // Use provided icon URL or default
+          iconData = iconUrl || 'https://via.placeholder.com/100/6a8e1e/a4c639?text=App';
+        }
+
+        // Process screenshots
+        const screenshotFiles = document.getElementById('appScreenshots').files;
+        const screenshotData = [];
+        const screenshotIds = [];
+        
+        for (let i = 0; i < screenshotFiles.length; i++) {
+          const data = await fileToBase64(screenshotFiles[i]);
+          screenshotData.push(data);
+          const id = 'screenshot_' + Date.now() + '_' + i;
+          screenshotIds.push(id);
+          
+          uploadedFiles[id] = {
+            data: data,
+            type: screenshotFiles[i].type,
+            name: screenshotFiles[i].name
+          };
+        }
+
+        // Save files to localStorage
+        saveFiles();
+
+        const newApp = {
+          id: 'app_' + Date.now(),
+          name: document.getElementById("appName").value,
+          developer: document.getElementById("devName").value,
+          version: document.getElementById("appVersion").value,
+          description: document.getElementById("appDescription").value,
+          icon: iconData,
+          fileId: fileId,
+          downloadLink: downloadLink,
+          screenshots: screenshotData,
+          downloads: 0,
+          rating: 0.0,
+          uploadDate: new Date().toISOString(),
+          uploadMethod: isFileUpload ? 'file' : 'link'
+        };
+
+        apps.push(newApp);
+        saveApps();
+        
+        showToast("App uploaded successfully!");
+        this.reset();
+        
+        // Reset file previews
+        document.getElementById('iconPreview').style.display = 'none';
+        document.getElementById('iconInfo').style.display = 'none';
+        document.getElementById('fileInfo').style.display = 'none';
+        document.getElementById('screenshotsInfo').style.display = 'none';
+        document.getElementById('screenshotsPreview').innerHTML = '';
+        
+        updateStats();
+        updateAdminAppList();
+        updateAppsGrid();
+        showPage(e, 'homePage');
+      } catch (error) {
+        console.error('Error uploading app:', error);
+        showToast("Error uploading app. Please try again.");
+      }
+    });
+
+    document.getElementById("adminLoginForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const password = document.getElementById("adminPassword").value;
+
+      if (password === ADMIN_PASSWORD) {
+        isAdminLoggedIn = true;
+        document.getElementById("adminLogin").style.display = "none";
+        document.getElementById("adminPanel").style.display = "block";
+        updateAdminAppList();
+        updateStats();
+        showToast("Admin Login successful!");
+      } else {
+        showToast("Incorrect password!");
+      }
+
+      this.reset();
+    });
+
+    function togglePassword(inputId) {
+      const input = document.getElementById(inputId);
+      if (input.type === "password") {
+        input.type = "text";
+      } else {
+        input.type = "password";
+      }
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById("toast");
+      toast.textContent = message;
+      toast.classList.add("show");
+      
+      setTimeout(() => {
+        toast.classList.remove("show");
+      }, 3000);
+    }
+
+    window.logout = function () {
+      isAdminLoggedIn = false;
+      document.getElementById("adminLogin").style.display = "block";
+      document.getElementById("adminPanel").style.display = "none";
+      showToast("Logged out successfully!");
+    };
+
+    window.deleteApp = function (index) {
+      if (confirm(`Delete the app: ${apps[index].name}?`)) {
+        // Remove associated files from storage
+        const app = apps[index];
+        if (app.fileId) delete uploadedFiles[app.fileId];
+        
+        // Remove the app
+        apps.splice(index, 1);
+        saveApps();
+        saveFiles();
+        
+        updateAdminAppList();
+        updateStats();
+        updateAppsGrid();
+        showToast("App deleted successfully!");
+      }
+    };
+
+    function updateAdminAppList() {
+      const list = document.getElementById("adminAppList");
+      const emptyState = document.getElementById("adminEmptyState");
+      
+      if (apps.length === 0) {
+        list.style.display = "none";
+        emptyState.style.display = "block";
+      } else {
+        list.style.display = "block";
+        emptyState.style.display = "none";
+        
+        list.innerHTML = "";
+        apps.forEach((app, index) => {
+          const li = document.createElement("li");
+          li.className = "app-list-item";
+          li.innerHTML = `
+            <div>
+              <strong>${app.name}</strong>
+              <div style="font-size: 12px; color: #999;">by ${app.developer} • v${app.version}</div>
+              <div style="font-size: 12px; color: #666;">${app.downloads} downloads • ${app.uploadMethod === 'file' ? '📁 File' : '🔗 Link'}</div>
+              <div style="font-size: 10px; color: #555;">Uploaded: ${new Date(app.uploadDate).toLocaleDateString()}</div>
+            </div>
+            <button class="delete-btn" onclick="deleteApp(${index})">Delete</button>
+          `;
+          list.appendChild(li);
+        });
+      }
+    }
+
+    function updateStats() {
+      const totalApps = apps.length;
+      const totalDownloads = apps.reduce((sum, app) => sum + app.downloads, 0);
+      const totalRatingSum = apps.reduce((sum, app) => sum + app.rating, 0);
+      const avgRating = totalApps > 0 ? (totalRatingSum / totalApps).toFixed(1) : "0.0";
+
+      document.getElementById("totalApps").textContent = totalApps;
+      document.getElementById("totalDownloads").textContent = totalDownloads;
+      document.getElementById("avgRating").textContent = avgRating;
+
+      if (isAdminLoggedIn) {
+        document.getElementById("adminTotalApps").textContent = totalApps;
+        document.getElementById("adminTotalDownloads").textContent = totalDownloads;
+      }
+    }
+
+    // Initialize the app
+    document.addEventListener("DOMContentLoaded", () => {
+      updateStats();
+      updateAppsGrid();
+    });
+  </script>
+</body>
+</html>
